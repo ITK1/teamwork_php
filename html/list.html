@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Danh sách sản phẩm | WMS PRO</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-logo">WMS PRO</div>
+        <nav style="margin-top: 20px">
+          <a href="#" class="nav-item"
+            ><i class="fas fa-chart-line"></i> Dashboard</a
+          >
+          <a href="#" class="nav-item active"
+            ><i class="fas fa-boxes"></i> Quản lý sản phẩm</a
+          >
+          <a href="#" class="nav-item"
+            ><i class="fas fa-truck"></i> Nhà cung cấp</a
+          >
+          <a href="#" class="nav-item"
+            ><i class="fas fa-file-import"></i> Nhập kho</a
+          >
+          <a href="#" class="nav-item"
+            ><i class="fas fa-file-export"></i> Xuất kho</a
+          >
+          <a href="#" class="nav-item"
+            ><i class="fas fa-history"></i> Lịch sử kho</a
+          >
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+          "
+        >
+          <div>
+            <h1
+              style="color: var(--text-dark); font-size: 26px; font-weight: 800"
+            >
+              Danh sách sản phẩm
+            </h1>
+            <p style="color: var(--text-light)">
+              Hiển thị toàn bộ thông tin hàng hóa trong hệ thống SQL
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="toggleModal()">
+            <i class="fas fa-plus mr-2"></i> Thêm mới sản phẩm
+          </button>
+        </div>
+
+        <div class="card">
+          <div style="padding: 20px; border-bottom: 1px solid var(--border)">
+            <div style="position: relative; width: 400px">
+              <i
+                class="fas fa-search"
+                style="
+                  position: absolute;
+                  left: 15px;
+                  top: 12px;
+                  color: var(--text-light);
+                "
+              ></i>
+              <input
+                type="text"
+                id="searchInput"
+                onkeyup="searchTable()"
+                placeholder="Tìm theo tên hoặc mã SKU..."
+                style="
+                  width: 100%;
+                  padding: 10px 10px 10px 45px;
+                  border-radius: 8px;
+                  border: 1px solid var(--border);
+                  outline: none;
+                  font-size: 14px;
+                "
+              />
+            </div>
+          </div>
+
+          <table class="table-custom" id="productTable">
+            <thead>
+              <tr>
+                <th width="60">ID</th>
+                <th width="80">Hình</th>
+                <th>Tên sản phẩm</th>
+                <th>Mã SKU</th>
+                <th>ĐVT</th>
+                <th>Giá nhập</th>
+                <th>Tồn kho</th>
+                <th>Trạng thái</th>
+                <th style="text-align: center">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-bold">01</td>
+                <td>
+                  <img
+                    src="https://via.placeholder.com/100"
+                    class="img-thumb"
+                  />
+                </td>
+                <td>
+                  <div class="text-bold">Máy khoan Bosch GSB 550</div>
+                  <div style="font-size: 11px; color: var(--text-light)">
+                    Category: Dụng cụ điện
+                  </div>
+                </td>
+                <td><span class="sku-code">BSH-GSB-550</span></td>
+                <td>Bộ</td>
+                <td class="text-bold">1,250,000đ</td>
+                <td class="text-bold">120</td>
+                <td><span class="badge status-active">Hoạt động</span></td>
+                <td style="text-align: center">
+                  <button
+                    title="Sửa"
+                    style="
+                      color: var(--primary);
+                      border: none;
+                      background: none;
+                      cursor: pointer;
+                    "
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <span style="color: #e2e8f0; margin: 0 5px">|</span>
+                  <button
+                    title="Xóa"
+                    style="
+                      color: var(--danger);
+                      border: none;
+                      background: none;
+                      cursor: pointer;
+                    "
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-bold">02</td>
+                <td>
+                  <img
+                    src="https://via.placeholder.com/100"
+                    class="img-thumb"
+                  />
+                </td>
+                <td>
+                  <div class="text-bold">Băng keo trong 5cm</div>
+                  <div style="font-size: 11px; color: var(--text-light)">
+                    Category: Vật tư phụ
+                  </div>
+                </td>
+                <td><span class="sku-code">BK-T5</span></td>
+                <td>Cuộn</td>
+                <td class="text-bold">12,000đ</td>
+                <td class="text-bold" style="color: var(--danger)">
+                  08
+                  <small style="display: block; font-weight: 400"
+                    >Cảnh báo!</small
+                  >
+                </td>
+                <td><span class="badge status-active">Hoạt động</span></td>
+                <td style="text-align: center">
+                  <button
+                    title="Sửa"
+                    style="
+                      color: var(--primary);
+                      border: none;
+                      background: none;
+                      cursor: pointer;
+                    "
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <span style="color: #e2e8f0; margin: 0 5px">|</span>
+                  <button
+                    title="Xóa"
+                    style="
+                      color: var(--danger);
+                      border: none;
+                      background: none;
+                      cursor: pointer;
+                    "
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination-container">
+            <div
+              style="font-size: 14px; color: var(--text-main); font-weight: 500"
+            >
+              Hiển thị 1 - 10 trong 45 sản phẩm
+            </div>
+            <nav class="pagination">
+              <a href="#" class="page-item"
+                ><i class="fas fa-angle-left"></i
+              ></a>
+              <a href="#" class="page-item active">1</a>
+              <a href="#" class="page-item">2</a>
+              <a href="#" class="page-item">3</a>
+              <span style="color: var(--text-light); padding: 0 5px">...</span>
+              <a href="#" class="page-item">5</a>
+              <a href="#" class="page-item"
+                ><i class="fas fa-angle-right"></i
+              ></a>
+            </nav>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal" id="productModal">
+      <div class="modal-content">
+        <h2
+          style="margin-bottom: 25px; color: var(--text-dark); font-weight: 800"
+        >
+          Thông tin sản phẩm
+        </h2>
+        <form style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div style="grid-column: span 2">
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              "
+              >Tên sản phẩm</label
+            >
+            <input
+              type="text"
+              style="
+                width: 100%;
+                padding: 12px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              "
+              >Mã SKU</label
+            >
+            <input
+              type="text"
+              style="
+                width: 100%;
+                padding: 12px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+              "
+            />
+          </div>
+          <div>
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              "
+              >Đơn vị tính</label
+            >
+            <select
+              style="
+                width: 100%;
+                padding: 12px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+              "
+            >
+              <option>Cái</option>
+              <option>Hộp</option>
+              <option>Kg</option>
+            </select>
+          </div>
+          <div
+            style="
+              grid-column: span 2;
+              display: flex;
+              justify-content: flex-end;
+              gap: 10px;
+              border-top: 1px solid #eee;
+              padding-top: 20px;
+            "
+          >
+            <button
+              type="button"
+              class="btn"
+              style="background: #f1f5f9; color: var(--text-dark)"
+              onclick="toggleModal()"
+            >
+              Đóng
+            </button>
+            <button type="submit" class="btn btn-primary shadow">
+              Lưu dữ liệu
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function toggleModal() {
+        document.getElementById("productModal").classList.toggle("open");
+      }
+
+      function searchTable() {
+        let input = document.getElementById("searchInput").value.toUpperCase();
+        let table = document.getElementById("productTable");
+        let tr = table.getElementsByTagName("tr");
+        for (let i = 1; i < tr.length; i++) {
+          let found = false;
+          let td = tr[i].getElementsByTagName("td");
+          for (let j = 0; j < td.length; j++) {
+            if (td[j] && td[j].innerText.toUpperCase().indexOf(input) > -1) {
+              found = true;
+            }
+          }
+          tr[i].style.display = found ? "" : "none";
+        }
+      }
+    </script>
+  </body>
+</html>

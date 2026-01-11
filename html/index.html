@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warehouse Pro - Quản lý kho chuyên nghiệp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    /> -->
+    <style>
+      .sidebar-item {
+        transition: all 0.3s;
+      }
+      .sidebar-item:hover {
+        background: #374151;
+        transform: translateX(5px);
+      }
+      .card-stats:hover {
+        transform: translateY(-5px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="flex min-h-screen">
+      <aside class="w-64 bg-gray-900 text-white fixed h-full transition-all">
+        <div
+          class="p-6 text-2xl font-bold border-b border-gray-800 flex items-center"
+        >
+          <i class="fas fa-boxes-stacked mr-3 text-blue-400"></i> WMS PRO
+        </div>
+        <nav class="mt-6">
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 bg-blue-600 text-white"
+          >
+            <i class="fas fa-chart-line mr-3"></i> Dashboard
+          </a>
+          <div class="px-6 py-4 text-xs uppercase text-gray-500 font-bold">
+            Quản lý
+          </div>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-users mr-3"></i> Người dùng & Quyền
+          </a>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-cube mr-3"></i> Sản phẩm (SKU)
+          </a>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-truck-field mr-3"></i> Nhà cung cấp
+          </a>
+          <div class="px-6 py-4 text-xs uppercase text-gray-500 font-bold">
+            Giao dịch
+          </div>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-file-import mr-3"></i> Nhập kho
+          </a>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-file-export mr-3"></i> Xuất kho
+          </a>
+          <div class="px-6 py-4 text-xs uppercase text-gray-500 font-bold">
+            Báo cáo
+          </div>
+          <a
+            href="#"
+            class="sidebar-item flex items-center py-3 px-6 text-gray-400"
+          >
+            <i class="fas fa-history mr-3"></i> Lịch sử & Tồn kho
+          </a>
+          <a
+            href="logout.php"
+            class="sidebar-item flex items-center py-3 px-6 text-red-400 mt-10 border-t border-gray-800"
+          >
+            <i class="fas fa-sign-out-alt mr-3"></i> Đăng xuất
+          </a>
+        </nav>
+      </aside>
+
+      <main class="flex-1 ml-64 p-8">
+        <header class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-800">Tổng quan kho</h1>
+            <p class="text-gray-500">
+              Chào mừng Admin, hôm nay có 5 phiếu nhập mới.
+            </p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span
+              class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium"
+            >
+              <i class="fas fa-bell"></i> 3 Cảnh báo tồn thấp
+            </span>
+            <img
+              src="https://ui-avatars.com/api/?name=Admin"
+              class="w-10 h-10 rounded-full border-2 border-white shadow"
+            />
+          </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500 card-stats transition-all"
+          >
+            <p class="text-sm text-gray-500 uppercase font-bold">Tổng SKU</p>
+            <p class="text-2xl font-bold text-gray-800">1,250</p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500 card-stats transition-all"
+          >
+            <p class="text-sm text-gray-500 uppercase font-bold">
+              Nhập tháng này
+            </p>
+            <p class="text-2xl font-bold text-gray-800">450</p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-red-500 card-stats transition-all"
+          >
+            <p class="text-sm text-gray-500 uppercase font-bold">
+              Xuất tháng này
+            </p>
+            <p class="text-2xl font-bold text-gray-800">312</p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500 card-stats transition-all"
+          >
+            <p class="text-sm text-gray-500 uppercase font-bold">
+              Tồn kho thấp
+            </p>
+            <p class="text-2xl font-bold text-gray-800 text-yellow-600">12</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div
+            class="p-6 border-b border-gray-100 flex justify-between items-center"
+          >
+            <h3 class="font-bold text-gray-800 text-lg">
+              Lịch sử giao dịch gần đây
+            </h3>
+            <button
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            >
+              Tải báo cáo
+            </button>
+          </div>
+          <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="p-4 font-semibold text-gray-600">Ngày</th>
+                <th class="p-4 font-semibold text-gray-600">Loại</th>
+                <th class="p-4 font-semibold text-gray-600">Sản phẩm</th>
+                <th class="p-4 font-semibold text-gray-600">Số lượng</th>
+                <th class="p-4 font-semibold text-gray-600">Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="p-4 text-gray-600">2023-10-27</td>
+                <td class="p-4">
+                  <span class="text-green-600 font-medium">NHẬP</span>
+                </td>
+                <td class="p-4 text-gray-800 font-medium">Thùng Carton A1</td>
+                <td class="p-4">+ 100</td>
+                <td class="p-4">
+                  <span
+                    class="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs"
+                    >Thành công</span
+                  >
+                </td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="p-4 text-gray-600">2023-10-27</td>
+                <td class="p-4">
+                  <span class="text-red-600 font-medium">XUẤT</span>
+                </td>
+                <td class="p-4 text-gray-800 font-medium">Keo 502</td>
+                <td class="p-4">- 20</td>
+                <td class="p-4">
+                  <span
+                    class="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs"
+                    >Thành công</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
