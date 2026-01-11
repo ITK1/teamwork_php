@@ -1,4 +1,6 @@
 <?php
+require_once 'config/config.php';
+
 // Module & action mặc định
 $module = isset($_GET['module']) ? $_GET['module'] : 'common';
 $action = isset($_GET['action']) ? $_GET['action'] : 'home';
