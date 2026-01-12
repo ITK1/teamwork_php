@@ -1,5 +1,6 @@
 <?php
 require_once 'config/config.php';
+require_once 'core/Model.php';
 
 // Module & action mặc định
 $module = isset($_GET['module']) ? $_GET['module'] : 'common';

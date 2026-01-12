@@ -1,7 +1,5 @@
  <?php
- if(!defined('_HIENU')){  //nếu hằng sô không đúng thì error
-    die('Truy cập không hợp lệ');
- }
+
 
  //Hàm truy vấn tất cả dữ liệu
 function getALL($sql){
