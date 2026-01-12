@@ -1,14 +1,10 @@
 <?php
+require_once 'model.php';
 
-function get_products($sql) {
-    $sql = "
-    SELECT p.*, c.name AS category_name
-    FROM product p
-    LEFT JOIN category c ON p.category_id = c.category
-    WHERE p.deleted_at IS NULL
-    ORDER BY p.id DESC
-    ";
-    return getALL($sql);
+switch ($action){
+    case 'list':
+        $product = get_products($sql);
+        require_once "views/list.php";
 }
 
 ?>
