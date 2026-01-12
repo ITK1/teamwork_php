@@ -1,19 +1,19 @@
-      <main class="main-content">
+<main class="main-content">
         <div class="grid-stats">
           <div class="stat-card blue">
-            <div class="stat-title">Tổng SKU</div>
-            <div class="stat-value">1,250</div>
+            <p class="stat-title">Tổng SKU</p>
+            <p class="stat-value">1,250</p>
           </div>
           <div class="stat-card green">
-            <div class="stat-title">Nhập tháng này</div>
-            <div class="stat-value">450</div>
+            <p class="stat-title">Nhập tháng này</p>
+            <p class="stat-value">450</p>
           </div>
           <div class="stat-card red">
-            <div class="stat-title">Xuất tháng này</div>
-            <div class="stat-value">312</div>
+            <p class="stat-title">Xuất tháng này</p>
+            <p class="stat-value">312</p>
           </div>
           <div class="stat-card yellow">
-            <div class="stat-title">Tồn kho thấp</div>
-            <div class="stat-value" style="color: #f59e0b">12</div>
+            <p class="stat-title">Tồn kho thấp</p>
+            <p class="stat-value">12</p>
           </div>
         </div>

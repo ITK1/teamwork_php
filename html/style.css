@@ -1,4 +1,4 @@
-/* --- Google Font & Reset --- */
+/* --- Google Font & Variable --- */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
@@ -6,8 +6,8 @@
   --primary-dark: #1d4ed8;
   --sidebar-bg: #0f172a;
   --bg-body: #f1f5f9;
-  --text-dark: #0f172a; /* Đen đậm sắc nét */
-  --text-main: #334155; /* Chữ chính */
+  --text-dark: #0f172a;
+  --text-main: #334155;
   --text-light: #64748b;
   --white: #ffffff;
   --border: #cbd5e1;
@@ -95,7 +95,7 @@ body {
   margin-right: 12px;
 }
 
-/* --- Stats Cards (Theo hình mẫu) --- */
+/* --- Stats Cards --- */
 .grid-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -142,7 +142,34 @@ body {
   margin-top: 5px;
 }
 
-/* --- Table & Card --- */
+/* --- Toolbar --- */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 15px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+}
+
+.input-control {
+  padding: 10px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.input-control:focus {
+  border-color: var(--primary);
+}
+
+/* --- Table --- */
 .card {
   background: var(--white);
   border-radius: 12px;
@@ -170,14 +197,36 @@ body {
   padding: 12px 15px;
   border-bottom: 1px solid #f1f5f9;
   font-size: 14px;
-  transition: 0.2s;
 }
 
 .table-custom tbody tr:hover {
   background-color: #f0f7ff;
 }
 
-/* --- Phân trang (Pagination) - Đã sửa lỗi lệch --- */
+/* --- Components --- */
+.img-product {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.sku-badge {
+  font-family: "Monaco", monospace;
+  background: #eff6ff;
+  color: var(--primary);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.text-bold {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* --- Pagination --- */
 .pagination-container {
   display: flex;
   justify-content: space-between;
@@ -191,7 +240,6 @@ body {
   display: flex;
   gap: 8px;
   list-style: none;
-  align-items: center;
 }
 
 .page-item {
@@ -210,59 +258,30 @@ body {
   transition: 0.2s;
 }
 
-.page-item.active,
-.page-item:hover {
+.page-item.active {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
 }
 
-/* --- Components con --- */
-.img-product {
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.sku-badge {
-  font-family: "Monaco", monospace;
-  background: #eff6ff;
-  color: var(--primary);
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-weight: 700;
-}
-
-.badge {
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-}
-.status-active {
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
-}
-
+/* --- Buttons --- */
 .btn {
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition: 0.2s;
 }
+
 .btn-primary {
   background: var(--primary);
   color: white;
 }
-.btn-dark {
-  background: var(--sidebar-bg);
-  color: white;
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
 }
