@@ -1,0 +1,1 @@
+<p>Bạn đã đăng xuất. <a href="?module=auth&action=login">Đăng nhập lại</a></p>
