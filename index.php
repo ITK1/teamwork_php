@@ -60,4 +60,7 @@ if ($module == 'auth') {
     echo "<li><a href='?module=auth&action=logout'>Đăng xuất</a></li>";
     echo "</ul>";
 }
+elseif ($module == 'user') {
+    include 'modules/user/controller.php';
+}
 ?>
