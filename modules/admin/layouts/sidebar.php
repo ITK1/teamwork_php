@@ -20,7 +20,7 @@
           <a href="#" class="nav-item active"
             ><i class="fas fa-th-large"></i> Dashboard</a
           >
-          <a href="#" class="nav-item"
+          <a href="?module=product" class="nav-item"
             ><i class="fas fa-boxes"></i> Sản phẩm (SKU)</a
           >
           <a href="#" class="nav-item"

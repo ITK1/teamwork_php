@@ -1,5 +1,11 @@
+<link rel="stylesheet" href="<?php echo BASE_URL;?>/assets/css/style.css ">
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-        <div class="toolbar">
+
+ <div class="toolbar">
           <div class="search-box">
             <input
               type="text"
@@ -38,33 +44,9 @@
               </tr>
             </thead>
             <tbody>
-            <?php foreach($product as $item): ?>
-                <tr>
-                    <td class="text-bold"><?= $item['id'] ?></td>
-                    <td>
-                      <img
-                        src="https://via.placeholder.com/80"
-                        class="img-product"
-                        alt="SP"
-                      />
-                    </td>
-                    <td class="text-bold"><?= $item['name'] ?></td>
-                    <td><span class="sku-badge"><?= $item['sku'] ?></span></td>
-                    <td>5</td>
-                    <td>Cái</td>
-                       <td class="text-bold"><?= $item['price_import'] ?></td>
-                    <td class="text-bold"><?= $item['quantity'] ?></td>
-                    <td><?= $item['created_at'] ?></td>
-                    <td>
-                      <button class="btn"><i class="fas fa-edit"></i></button>
-                      <button class="btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                  </tr>
-            <?php endforeach; ?>
-
-
-              <!-- <tr>
-                <td class="text-bold">1</td>
+            <?php foreach($products as $item): ?>
+              <tr>
+                <td class="text-bold"><?= $item['id']; ?></td>
                 <td>
                   <img
                     src="https://via.placeholder.com/80"
@@ -72,18 +54,19 @@
                     alt="SP"
                   />
                 </td>
-                <td class="text-bold">Máy khoan Bosch GSB 550</td>
-                <td><span class="sku-badge">BSH-550</span></td>
-                <td>5</td>
-                <td>Cái</td>
-                <td class="text-bold">1,250,000đ</td>
-                <td class="text-bold">120</td>
-                <td>2024-05-10</td>
+                <td class="text-bold"><?= $item['name']; ?></td>
+                <td><span class="sku-badge"><?= $item['sku']; ?></span></td>
+                <td><?= $item['category_id']; ?></td>
+                <td><?$item['unit'];?></td>
+                <td class="text-bold"><?= $item['price_import']; ?></td>
+                <td class="text-bold"><?= $item['quantity']; ?></td>
+                <td><?= $item['created_at']; ?></td>
                 <td>
                   <button class="btn"><i class="fas fa-edit"></i></button>
                   <button class="btn"><i class="fas fa-trash"></i></button>
                 </td>
-              </tr> -->
+              </tr>
+            <?php endforeach; ?>
             </tbody>
           </table>
 
@@ -107,4 +90,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
