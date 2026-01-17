@@ -12,7 +12,7 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password = $_POST['password']; 
 
             if (auth_register($conn, $username, $email, $password)) {
                 $success = "Đăng ký thành công! Hãy đăng nhập.";

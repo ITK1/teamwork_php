@@ -1,12 +1,14 @@
-<!DOCTYPE html>
+
+
+
+
+      <!DOCTYPE html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hệ thống Quản lý Kho - WMS PRO</title>
-  
      <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -22,6 +24,9 @@
           >
           <a href="?module=product" class="nav-item"
             ><i class="fas fa-boxes"></i> Sản phẩm (SKU)</a
+          >
+          <a href="?module=category" class="nav-item"
+            ><i class="fas fa-boxes"></i> Danh mục sản phẩm</a
           >
           <a href="#" class="nav-item"
             ><i class="fas fa-truck-loading"></i> Nhập kho</a

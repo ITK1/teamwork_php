@@ -1,63 +1,31 @@
 <?php
-// modules/category/controller.php
-require_once 'model.php';
+require_once "modules/category/model.php";
 
-// Kiểm tra đăng nhập (Bắt buộc phải đăng nhập mới được quản lý danh mục)
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ?module=auth&action=login");
-    exit;
+layout('sidebar');
+layout('header');
+layout('home');
+layout('footer');
+url_css();
+function homeAction($pdo) { listAction($pdo); }
+
+function listAction($pdo) {
+    $categories = get_categories_tree($pdo);
+    require_once "modules/category/views/list.php";
 }
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
-
-switch ($action) {
-    case 'list':
-        // Xử lý thêm nhanh ngay tại trang list (nếu muốn) hoặc chỉ hiện danh sách
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_add'])) {
-            $name = trim($_POST['name']);
-            if (!empty($name)) {
-                add_category($conn, $name);
-                header("Location: ?module=category&action=list"); // Refresh để thấy mới
-                exit;
-            }
-        }
-        
-        $categories = get_all_categories($conn);
-        include 'views/list.php';
-        break;
-
-    case 'update':
-        $id = isset($_GET['id']) ? $_GET['id'] : 0;
-        $category = get_category_by_id($conn, $id);
-
-        if (!$category) {
-            die("Danh mục không tồn tại!");
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = trim($_POST['name']);
-            if (!empty($name)) {
-                update_category($conn, $id, $name);
-                header("Location: ?module=category&action=list");
-                exit;
-            }
-        }
-        include 'views/update.php';
-        break;
-
-    case 'delete':
-        $id = isset($_GET['id']) ? $_GET['id'] : 0;
-        
-        // Nếu người dùng xác nhận xóa (POST)
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            delete_category($conn, $id);
-            header("Location: ?module=category&action=list");
-            exit;
-        }
-        
-        // Nếu chưa xác nhận, hiển thị trang hỏi (View Delete)
-        $category = get_category_by_id($conn, $id);
-        include 'views/delete.php';
-        break;
+function addAction($pdo) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        insert_category($pdo, $_POST);
+        header("Location: index.php?module=category&action=list");
+        exit;
+    }
 }
-?>
+
+function updateAction($pdo) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+        update_category_data($pdo, $id, $_POST);
+        header("Location: index.php?module=category&action=list");
+        exit;
+    }
+}

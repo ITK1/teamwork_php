@@ -1,13 +1,24 @@
 <?php
 
-function loadView($view, $data = []) {
-    global $module;
+function layout(string $name): void
+{
+    $path = LAYOUT_PATH . '/' . $name . '.php';
 
-    if (!empty($data)) {
-        extract($data); // 👈 BIẾN $product ĐƯỢC TẠO Ở ĐÂY
+    if (file_exists($path)) {
+        require $path;
+    } else {
+        echo "Layout $name not found";
     }
-
-    require "modules/$module/views/$view.php";
 }
+
+function url_css(){
+    if (!function_exists('css')) {
+        function css(string $file): void
+        {
+            echo '<link rel="stylesheet" href="' . BASE_URL . 'public/css/' . $file . '">';
+        }
+    }
+}
+
 
 ?>

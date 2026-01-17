@@ -30,7 +30,6 @@ if (file_exists($controllerPath)) {
 }
 
 
-
 // $module = isset($_GET['module']) ? $_GET['module'] : 'dashboard';
 
 // if ($module == 'auth') {
