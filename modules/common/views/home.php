@@ -14,7 +14,7 @@
     <div class="container">
         <header>
             <h1>Chào mừng bạn đến với Cửa hàng</h1>
-            <p><a href="index.php?module=admin&action=dashboard">Vào trang Quản trị (Admin)</a></p>
+            <p><a href="index.php?module=dashboard">Vào trang Quản trị (Admin)</a></p>
         </header>
 
         <section class="product-list">

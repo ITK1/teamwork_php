@@ -7,17 +7,32 @@ layout('home');
 layout('footer');
 url_css();
 
-
 function homeAction($pdo) {
     listAction($pdo);
     
 }
-
 function listAction($pdo) {
+    // 1. Lấy từ khóa lọc từ URL
     $keyword = $_GET['search'] ?? '';
     $cat_id = $_GET['category_id'] ?? '';
-    $products = get_products($pdo, $keyword, $cat_id);
+    
+    // 2. Cấu hình phân trang
+    $limit = 10; // Số sản phẩm mỗi trang
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    if ($page < 1) $page = 1;
+    $offset = ($page - 1) * $limit;
+
+    // 3. Lấy tổng số bản ghi để tính số trang
+    $total_records = count_products($pdo, $keyword, $cat_id); // Hàm này phải có trong Model
+    $total_pages = ceil($total_records / $limit);
+
+    // 4. Lấy dữ liệu sản phẩm theo giới hạn LIMIT OFFSET
+    $products = get_products_paginated($pdo, $keyword, $cat_id, $limit, $offset);
+    
+    // 5. Lấy danh mục cho ô Select lọc
     $categories = db_get_all($pdo, "SELECT * FROM categories WHERE status = 1");
+    
+    // Nạp View
     require_once "modules/product/views/list.php";
 }
 
@@ -29,62 +44,43 @@ function addAction($pdo) {
             move_uploaded_file($_FILES['image']['tmp_name'], "uploads/products/" . $img);
         }
         $data = [
-            $_POST['sku'], $_POST['name'], $img, $_POST['category_id'], 
-            $_POST['unit'], $_POST['price_import'], $_POST['status']
+            'sku' => $_POST['sku'], 'name' => $_POST['name'], 'image' => $img,
+            'category_id' => $_POST['category_id'], 'unit' => $_POST['unit'],
+            'price_import' => $_POST['price_import'] ?? 0, 'status' => $_POST['status'] ?? 1
         ];
         insert_product($pdo, $data);
         header("Location: index.php?module=product&action=list");
         exit;
     }
-    $categories = db_get_all($pdo, "SELECT * FROM categories WHERE status = 1");
-    require_once "modules/product/views/update.php";
 }
 
 function updateAction($pdo) {
-    $id = $_GET['id'] ?? null;
-    $product = get_product_by_id($pdo, $id);
-    if (!$product) die("Không tìm thấy sản phẩm!");
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $img = $product['image']; // Mặc định giữ lại tên ảnh cũ
+        $id = $_POST['id'];
+        $product = db_get_one($pdo, "SELECT image FROM products WHERE id = ?", [$id]);
+        $img = $product['image'];
 
-        // Nếu người dùng upload ảnh mới
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $newImg = time() . '_' . $_FILES['image']['name'];
-            if (move_uploaded_file($_FILES['image']['tmp_name'], "uploads/products/" . $newImg)) {
-                // Xóa ảnh cũ khỏi thư mục để tiết kiệm bộ nhớ
-                if ($img && file_exists("uploads/products/" . $img)) {
-                    unlink("uploads/products/" . $img);
-                }
-                $img = $newImg;
-            }
+            move_uploaded_file($_FILES['image']['tmp_name'], "uploads/products/" . $newImg);
+            if ($img && file_exists("uploads/products/".$img)) unlink("uploads/products/".$img);
+            $img = $newImg;
         }
 
         $data = [
-            'sku' => $_POST['sku'],
-            'name' => $_POST['name'],
-            'image' => $img,
-            'category_id' => $_POST['category_id'],
-            'unit' => $_POST['unit'],
-            'price_import' => $_POST['price_import'],
-            'status' => $_POST['status']
+            'sku' => $_POST['sku'], 'name' => $_POST['name'], 'image' => $img,
+            'category_id' => $_POST['category_id'], 'unit' => $_POST['unit'],
+            'price_import' => $_POST['price_import'] ?? 0, 'status' => $_POST['status'] ?? 1
         ];
-
-        update_product($pdo, $id, $data);
+        update_product_data($pdo, $id, $data);
         header("Location: index.php?module=product&action=list");
         exit;
     }
-
-    $categories = db_get_all($pdo, "SELECT * FROM categories WHERE status = 1");
-    require_once "modules/product/views/update.php"; // Dùng chung form với Add
 }
 
 function deleteAction($pdo) {
     $id = $_GET['id'] ?? null;
-    if ($id) {
-        // Sử dụng xóa mềm (Soft Delete) để giữ lại lịch sử kho
-        db_soft_delete($pdo, 'products', $id);
-    }
+    if ($id) db_soft_delete($pdo, 'products', $id);
     header("Location: index.php?module=product&action=list");
     exit;
 }

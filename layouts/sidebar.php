@@ -19,7 +19,7 @@
       <aside class="sidebar">
         <div class="sidebar-logo">WMS PRO</div>
         <nav>
-          <a href="#" class="nav-item active"
+          <a href="?module=dashboard" class="nav-item active"
             ><i class="fas fa-th-large"></i> Dashboard</a
           >
           <a href="?module=product" class="nav-item"
@@ -28,10 +28,13 @@
           <a href="?module=category" class="nav-item"
             ><i class="fas fa-boxes"></i> Danh mục sản phẩm</a
           >
-          <a href="#" class="nav-item"
+          <a href="?module=supplier" class="nav-item"
+            ><i class="fas fa-truck-loading"></i> Nhà cung cấp</a
+          >
+          <a href="?module=inventory" class="nav-item"
             ><i class="fas fa-truck-loading"></i> Nhập kho</a
           >
-          <a href="#" class="nav-item"><i class="fas fa-dolly"></i> Xuất kho</a>
+          <a href="?module=inventory_out" class="nav-item"><i class="fas fa-dolly"></i> Xuất kho</a>
           <a href="#" class="nav-item"
             ><i class="fas fa-history"></i> Lịch sử kho</a
           >

@@ -1,37 +1,33 @@
       <script>
-        // Đóng/Mở Modal
-function openModal(modalId) { document.getElementById(modalId).classList.add("active"); }
-function closeModal(modalId) { document.getElementById(modalId).classList.remove("active"); }
-
-// Mở modal update và đổ dữ liệu mẫu
-function openUpdateModal(id) {
-    // Dữ liệu giả lập - Trong thực tế dùng Fetch API lấy từ DB
-    document.getElementById("update_id").value = id;
-    document.getElementById("update_name").value = "Máy khoan Bosch GSB 550";
-    document.getElementById("update_sku").value = "BSH-550";
-    document.getElementById("update_price").value = 1250000;
-    openModal('updateModal');
+// Mở modal thêm mới
+function openAddModal() {
+    document.getElementById('modalTitle').innerText = "THÊM SẢN PHẨM MỚI";
+    document.getElementById('productForm').reset();
+    document.getElementById('prod_id').value = "";
+    document.getElementById('productModal').classList.add('active');
 }
 
-// Tìm kiếm nhanh trong bảng
-function filterTable() {
-    let input = document.getElementById("searchInput").value.toUpperCase();
-    let tr = document.getElementById("productTable").getElementsByTagName("tr");
-    for (let i = 1; i < tr.length; i++) {
-        let found = false;
-        let td = tr[i].getElementsByTagName("td");
-        for (let j = 0; j < td.length; j++) {
-            if (td[j] && td[j].innerText.toUpperCase().indexOf(input) > -1) { found = true; }
-        }
-        tr[i].style.display = found ? "" : "none";
-    }
+// Mở modal cập nhật và đổ dữ liệu
+function openEditModal(id, name, sku, cat, unit, price, status) {
+    document.getElementById('modalTitle').innerText = "CẬP NHẬT SẢN PHẨM";
+    document.getElementById('prod_id').value = id;
+    document.getElementById('prod_name').value = name;
+    document.getElementById('prod_sku').value = sku;
+    document.getElementById('prod_category').value = cat;
+    document.getElementById('prod_unit').value = unit;
+    document.getElementById('prod_price').value = price;
+    document.getElementById('prod_status').value = status;
+    
+    document.getElementById('productModal').classList.add('active');
 }
 
-// Đóng modal khi click ra ngoài vùng modal-box
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal-overlay')) {
-        event.target.classList.remove('active');
-    }
+function closeModal() {
+    document.getElementById('productModal').classList.remove('active');
+}
+
+// Đóng khi click ra vùng xám
+window.onclick = function(e) {
+    if (e.target.classList.contains('modal-overlay')) { closeModal(); }
 }
       </script>
   </body>

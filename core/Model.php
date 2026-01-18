@@ -1,26 +1,12 @@
 <?php
-// Lấy nhiều dòng (Dùng cho List)
-
-// core/Model.php
-
+// Lấy danh sách nhiều dòng
 function db_get_all($pdo, $sql, $params = []) {
-    if (!$pdo) {
-        die("❌ Lỗi: Kết nối Database (\$pdo) bị NULL tại db_get_all");
-    }
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll();
 }
 
-function db_execute($pdo, $sql, $params = []) {
-    if (!$pdo) {
-        die("❌ Lỗi: Kết nối Database (\$pdo) bị NULL tại db_execute");
-    }
-    $stmt = $pdo->prepare($sql);
-    return $stmt->execute($params);
-}
-
-// Lấy 1 dòng (Dùng cho Edit/Detail)
+// Lấy 1 dòng duy nhất
 function db_get_one($pdo, $sql, $params = []) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
@@ -28,7 +14,10 @@ function db_get_one($pdo, $sql, $params = []) {
 }
 
 // Thực thi Insert, Update, Delete
-
+function db_execute($pdo, $sql, $params = []) {
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute($params);
+}
 
 // Xóa mềm (Soft Delete)
 function db_soft_delete($pdo, $table, $id) {

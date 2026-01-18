@@ -3,15 +3,29 @@
         <form action="index.php" method="GET" style="display: flex; gap: 10px">
             <input type="hidden" name="module" value="product">
             <input type="hidden" name="action" value="list">
+            
             <input
                 type="text"
                 name="search"
                 class="input-control"
                 placeholder="Tìm theo SKU hoặc tên..."
-                style="width: 300px"
-                value="<?= $_GET['search'] ?? '' ?>"
+                style="width: 250px"
+                value="<?= htmlspecialchars($keyword ?? '') ?>"
             />
+
+            <select name="category_id" class="input-control" style="width: 180px;">
+                <option value="0">-- Tất cả danh mục --</option>
+                <?php foreach ($categories as $cat): ?>
+                    <option value="<?= $cat['id'] ?>" <?= ($cat_id == $cat['id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            <?php if($keyword || $cat_id): ?>
+                <a href="index.php?module=product&action=list" class="btn" style="background:#e2e8f0; text-decoration:none; line-height:35px; padding:0 15px;">Xóa lọc</a>
+            <?php endif; ?>
         </form>
     </div>
     <button class="btn btn-primary" onclick="openModal('addModal')">
@@ -35,12 +49,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($products)): foreach ($products as $item): ?>
+            <?php if (!empty($products)): foreach($products as $item): ?>
                 <tr>
-                    <td style="font-weight: 700"><?= htmlspecialchars($item['id']); ?></td>
+                    <td style="font-weight: 700"><?= $item['id']; ?></td>
                     <td>
                         <img
-                            src="<?= !empty($item['image']) ? 'uploads/products/' . $item['image'] : 'https://via.placeholder.com/80' ?>"
+                            src="<?= !empty($item['image']) ? 'uploads/products/'.$item['image'] : 'https://via.placeholder.com/80' ?>"
                             class="img-product"
                             alt="SP"
                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
@@ -50,10 +64,12 @@
                         <?= htmlspecialchars($item['name']); ?>
                     </td>
                     <td><span class="sku-badge"><?= htmlspecialchars($item['sku']); ?></span></td>
-                    <td><?= htmlspecialchars($item['category_name'] ?? $item['category_id']); ?></td>
+                    <td><?= htmlspecialchars($item['category_name'] ?? 'N/A'); ?></td>
                     <td><?= htmlspecialchars($item['unit']); ?></td>
-                    <td style="font-weight: 700"><?= number_format($item['price_import']); ?> đ</td>
-                    <td style="font-weight: 800; color: var(--primary)"><?= htmlspecialchars($item['quantity']); ?></td>
+                    <td style="font-weight: 700"><?= number_format($item['price_import']); ?></td>
+                    <td style="font-weight: 800; color: <?= ($item['quantity'] <= 5) ? '#ef4444' : 'var(--primary)' ?>">
+                        <?= htmlspecialchars($item['quantity']); ?>
+                    </td>
                     <td>
                         <button
                             class="btn"
@@ -62,20 +78,36 @@
                         >
                             <i class="fas fa-edit"></i>
                         </button>
-                        <a href="index.php?module=product&action=delete&id=<?= $item['id']; ?>" 
+                        <a href="index.php?module=product&action=delete&id=<?= $item['id'] ?>" 
                            class="btn" style="color: #ef4444; background: none"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                           onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>
             <?php endforeach; else: ?>
-                <tr><td colspan="9" style="text-align:center">Không tìm thấy sản phẩm nào.</td></tr>
+                <tr><td colspan="9" style="text-align:center; padding:20px;">Không có dữ liệu sản phẩm.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>
-    <div class="pagination">
-        <a href="#" class="page-item active">1</a>
+
+    <div class="pagination" style="display: flex; gap: 5px; margin-top: 20px; justify-content: center; padding: 20px;">
+        <?php if ($total_pages > 1): ?>
+            <?php if ($page > 1): ?>
+                <a href="index.php?module=product&action=list&page=<?= $page-1 ?>&search=<?= urlencode($keyword) ?>&category_id=<?= $cat_id ?>" class="page-item">«</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <a href="index.php?module=product&action=list&page=<?= $i ?>&search=<?= urlencode($keyword) ?>&category_id=<?= $cat_id ?>" 
+                   class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($page < $total_pages): ?>
+                <a href="index.php?module=product&action=list&page=<?= $page+1 ?>&search=<?= urlencode($keyword) ?>&category_id=<?= $cat_id ?>" class="page-item">»</a>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -104,15 +136,22 @@
             </div>
             <div class="form-group">
                 <label>Đơn vị</label>
-                <input type="text" name="unit" placeholder="Cái, Kg..." required />
+                <input type="text" name="unit" required placeholder="Cái, Kg..." />
             </div>
             <div class="form-group">
                 <label>Giá nhập</label>
-                <input type="number" name="price_import" />
+                <input type="number" name="price_import" value="0" />
             </div>
             <div class="form-group">
                 <label>Hình ảnh</label>
                 <input type="file" name="image" accept="image/*" />
+            </div>
+            <div class="form-group">
+                <label>Trạng thái</label>
+                <select name="status">
+                    <option value="1">Đang kinh doanh</option>
+                    <option value="0">Tạm ngưng</option>
+                </select>
             </div>
             <div class="modal-footer full-width">
                 <button type="button" class="btn" style="background: #e2e8f0" onclick="closeModal('addModal')">Hủy</button>
@@ -155,6 +194,13 @@
                 <input type="text" name="unit" id="update_unit" />
             </div>
             <div class="form-group">
+                <label>Trạng thái</label>
+                <select name="status" id="update_status">
+                    <option value="1">Đang kinh doanh</option>
+                    <option value="0">Tạm ngưng</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
                 <label>Hình ảnh mới (để trống nếu giữ nguyên)</label>
                 <input type="file" name="image" accept="image/*" />
             </div>
@@ -166,8 +212,12 @@
     </div>
 </div>
 
+<style>
+.pagination .page-item { padding: 8px 15px; border: 1px solid #e2e8f0; text-decoration: none; color: #64748b; border-radius: 6px; }
+.pagination .page-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+</style>
+
 <script>
-// Hàm mở Modal và điền dữ liệu tự động cho Update
 function openUpdateModal(product) {
     document.getElementById('update_id').value = product.id;
     document.getElementById('update_name').value = product.name;
@@ -175,8 +225,9 @@ function openUpdateModal(product) {
     document.getElementById('update_category').value = product.category_id;
     document.getElementById('update_price').value = product.price_import;
     document.getElementById('update_unit').value = product.unit;
+    document.getElementById('update_status').value = product.status;
     
-    document.getElementById('updateModal').classList.add('active');
+    openModal('updateModal');
 }
 
 function openModal(id) { document.getElementById(id).classList.add('active'); }

@@ -1,4 +1,11 @@
 <?php
+
+ob_start(); // Tránh lỗi "headers already sent" khi dùng header()
+session_start(); // Khởi tạo session để tránh lỗi "Undefined global variable $_SESSION"
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once 'core/database.php';
 require_once 'config/config.php';
 require_once 'core/Model.php';
